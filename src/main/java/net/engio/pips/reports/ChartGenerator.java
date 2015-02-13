@@ -81,14 +81,14 @@ public class ChartGenerator implements IReporter {
         plot.setDomainGridlinesVisible(true);
         plot.setDomainGridlinePaint(Color.BLACK);
         plot.setBackgroundPaint(Color.DARK_GRAY);
-        plot.setRenderer(0, getRandomRenderer());
+        plot.setRenderer(0, getRandomRenderer(null));
         // add other groups
         List<SeriesGroup> groups = this.groups.subList(1, this.groups.size());
         int axisIndex = 1,
             dataSetIndex = 1;
         for(SeriesGroup group : groups){
             plot.setDataset(dataSetIndex, group.createDataSet(benchmark));
-            plot.setRenderer(dataSetIndex, getRandomRenderer());
+            plot.setRenderer(dataSetIndex, getRandomRenderer(group));
 
             // if the group does not share a range axis with an already mapped group
             if(!groupAxis.containsKey(group.getLabel())){
@@ -131,9 +131,13 @@ public class ChartGenerator implements IReporter {
     }
 
 
-    private XYLineAndShapeRenderer getRandomRenderer(){
+    private XYLineAndShapeRenderer getRandomRenderer(SeriesGroup group){
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, getRandomColor());
+        if (group != null && group.getColor() != null) {
+            renderer.setSeriesPaint(0, group.getColor());
+        } else {
+            renderer.setSeriesPaint(0, getRandomColor());
+        }
         return renderer;
     }
 

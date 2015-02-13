@@ -3,9 +3,11 @@ package net.engio.pips.reports;
 import net.engio.pips.data.IDataCollector;
 import net.engio.pips.data.utils.TimeBasedAggregator;
 import net.engio.pips.lab.Benchmark;
+
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +35,8 @@ public class SeriesGroup {
     private String yAxis = "";
 
     private Orientation orientation = Orientation.Left;
+
+    private Color color;
 
     public SeriesGroup(String label) {
         this.label = label;
@@ -75,7 +79,14 @@ public class SeriesGroup {
         return this;
     }
 
+    public Color getColor() {
+        return color;
+    }
 
+    public SeriesGroup setColor(Color color) {
+        this.color = color;
+        return this;
+    }
 
     public TimeSeriesCollection createDataSet(Benchmark benchmark){
         TimeSeriesCollection collection = new TimeSeriesCollection();
@@ -92,4 +103,6 @@ public class SeriesGroup {
         }
         return collection;
     }
+
+
 }
