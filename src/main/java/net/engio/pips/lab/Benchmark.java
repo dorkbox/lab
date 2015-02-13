@@ -24,6 +24,7 @@ public class Benchmark {
         public static final String TimeoutInSeconds = "Timeout in seconds";
         public static final String SampleInterval = "Sample interval";
         public static final String BasePath = "Base path";
+        public static final String ProjectName = "Test Name";
         public static final String LogStream = "Log stream";
         public static final String Title = "Title";
         public static final String ReportBaseDir = "Report base dir";
@@ -169,7 +170,14 @@ public class Benchmark {
 
     private String prepareDirectory() {
         //create directory
-        File baseDir = new File(getProperty(Properties.BasePath) + File.separator + getTitle() + File.separator + System.currentTimeMillis());
+        String pathname = getProperty(Properties.BasePath) + File.separator + getTitle();
+        String dirname = getProperty(Benchmark.Properties.ProjectName);
+        if (dirname != null) {
+            dirname += "-" + System.currentTimeMillis();
+        } else {
+            dirname = Long.toString(System.currentTimeMillis());
+        }
+        File baseDir = new File(pathname + File.separator + dirname);
         baseDir.mkdirs();
         return baseDir.getAbsolutePath() + File.separator;
     }
