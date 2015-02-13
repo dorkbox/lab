@@ -130,6 +130,6 @@ public class ExecutionContext {
 
     public boolean containsKey(String key) {
         return properties.containsKey(key)
-                || parent != null ? parent.containsKey(key) : false;
+                || parent != null && parent.containsKey(key);
     }
 }
